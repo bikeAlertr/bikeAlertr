@@ -1,37 +1,35 @@
-import React from 'react'
+import { Box } from "@material-ui/core";
+import React from "react";
 import { Router, Route, Switch } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import Alerts from './components/alertColumn';
-import Dashboard from './components/dashboard';
-import Login from './components/login';
-import Signup from './components/signup';
+import Alerts from "./components/alertColumn";
+import Dashboard from "./components/dashboard";
+import Login from "./components/login";
+import Signup from "./components/signup";
 
 let routes = (
   <div>
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/">
-        <Login />
-      </ Route>
-      <Route path="/signup">
-        <Signup />
-      </Route>
-      <Route path="/dashboard">
-        <Dashboard />
-        <Alerts />
-      </Route>
-    </Switch>
-  </BrowserRouter>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Box component="span" m={1}>
+            <Login />
+          </Box>
+        </Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard />
+          <Alerts />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   </div>
 );
 
-
 const App = () => {
-  return (
-    <div>
-      {routes}
-    </div>
-  )
+  return <div>{routes}</div>;
 };
 
 export default App;
