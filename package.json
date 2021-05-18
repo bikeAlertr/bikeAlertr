@@ -7,6 +7,7 @@
     "start": "cross-env process.env.NODE_ENV=production nodemon server/server.ts",
     "build": "cross-env process.env.NODE_ENV=production webpack",
     "dev": "cross-env process.env.NODE_ENV=development concurrently \"webpack serve\" \"nodemon ./server/server.ts\"",
+    "dev-mac": "cross-env process.env.NODE_ENV=development webpack serve & nodemon ./server/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
