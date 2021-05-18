@@ -1,15 +1,34 @@
 import React from 'react'
+import { Router, Route, Switch } from "react-router";
+import Alerts from './components/alertColumn';
+import Dashboard from './components/dashboard';
+import Login from './components/login';
+import Signup from './components/signup';
 
-// import Login from './components/login'
+let routes = (
+  <div>
+    <Switch>
+      <Route exact path="/">
+        <Login />
+      </ Route>
+      <Route path="/signup">
+        <Signup />
+      </Route>
+      <Route path="/dashboard">
+        <Dashboard />
+        <Alerts />
+      </Route>
+    </Switch>
+  </div>
+);
+
 
 const App = () => {
   return (
     <div>
-      <h1>Hello World!</h1>
-      <h3>Team Charizard</h3>
-      {/* <Login />; */}
+      {routes}
     </div>
   )
-}
+};
 
 export default App;
