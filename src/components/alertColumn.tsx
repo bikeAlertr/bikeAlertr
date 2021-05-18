@@ -4,7 +4,7 @@ import { Router, Route, Switch } from "react-router";
 const Alerts = () => {
   return (
     <div>
-      <h1>Signup page</h1>
+      <h1>Alert Column</h1>
     </div>
   )
 }
