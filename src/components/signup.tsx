@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { signupForm } from "../types/signUpTypes"
+
 
 const Signup = () => {
-  const [signUpState, setSignUpState] = useState({
-    password: null,
-    confirmPassword: null
+  const [signUpState, setSignUpState] = useState<signupForm>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    address1: "",
+    address2: "",
+    city: "",
+    zip_code: 0,
+    phone: 0,
   });
 
   const signUpSubmit = (e: any) => {
     e.preventDefault();
     if (validatePassword()) createUser();
-    else alert('Invalid Inputs!');
-    console.log(signUpState);
+    else alert("Invalid Inputs!");
+    // console.log(signUpState);
+    // console.log(e.target.value);
   };
 
   const createUser = () => {
@@ -90,23 +99,23 @@ const Signup = () => {
         <br />
         <input
           id="zipCode"
-          type="text"
+          type="number"
           placeholder="Zip Code"
           onChange={(e) =>
-            setSignUpState({ ...signUpState, Zip_Code: e.target.value })
+            setSignUpState({ ...signUpState, zip_code: +e.target.value })
           }
         />
         <br />
         <input
           id="phone"
-          type="text"
+          type="number"
           placeholder="Phone"
           onChange={(e) =>
-            setSignUpState({ ...signUpState, phone: e.target.value })
+            setSignUpState({ ...signUpState, phone: +e.target.value })
           }
         />
         <br />
-        <input form="loginForm" type="submit" value="Submit"></input>
+        <input form="SignUpForm" type="submit" value="Submit"></input>
       </form>
     </div>
   );
