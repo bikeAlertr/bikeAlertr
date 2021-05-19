@@ -26,7 +26,10 @@ const FavoritesTable = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("favorites", favorites);
+        // Update local favorites state with data from server
         setFavorites(data);
+        // Update context with favorites to share with alerts component
+        setUser(...user, favorites);
       });
 
     lastUpdated(); // to store the time of this fetch req
