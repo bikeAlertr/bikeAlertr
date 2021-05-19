@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 // const axios = require('axios');
 
@@ -12,7 +11,7 @@ const apiRouter = require('./routes/api');
 // Parse cookies & save to req.cookies
 app.use(cookieParser());
 // Parse urlencoded body content & save to req.body
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 // ------------------------------------------------------------------
 
 // ------------------------ STATIC FILES ----------------------------
