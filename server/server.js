@@ -1,24 +1,23 @@
-import { NextFunction } from "express-serve-static-core";
-import {Request, Response} from 'express';
-
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser')
-const axios = require('axios');
+const cookieParser = require('cookie-parser');
+// const axios = require('axios');
 
 const app = express();
 const path = require('path');
 
-// -----------------------------------------------------
+const apiRouter = require('./routes/api');
+
+// ------------------------------------------------------------------
 // Parse cookies & save to req.cookies
 app.use(cookieParser());
 // Parse urlencoded body content & save to req.body
 app.use(bodyParser.urlencoded({ extended: true }));
-// ------------------------------------------------------
+// ------------------------------------------------------------------
 
 // ------------------------ STATIC FILES ----------------------------
 // Handle Requests for static files
-app.use('/assets', express.static(path.join(__dirname,'../src/assets')))
+app.use('/assets', express.static(path.join(__dirname,'../src/assets')));
 // statically serve everything in the build folder on the route '/build'
 app.use('/build', express.static(path.join(__dirname, '../build')));
 // -------------------------------------------------------------------
@@ -26,19 +25,23 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 // --------------------- OAUTH ROUTE HANDLING ------------------------
 // -------------------------------------------------------------------
 
-// ------------------------ PUBLIC ROUTES --------------------------
+// ------------------------ PUBLIC ROUTES ----------------------------
 // *** LOGIN PAGE HANDLING ***************
-
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../src/index.html'));
+})
 // ***************************************
 // *** SIGNUP PAGE HANDLING **************
-
+app.get('/signup', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../src/index.html'));
+});
 // ****************************************
 // -------------------------------------------------------------------
 
 // ---------------------- AUTHORIZED ROUTES --------------------------
 // serve dashboard.html on the route '/'
-app.get('/', (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, '../src/index.html'))
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../src/index.html'));
 });
 
 app.get('/dashboard', (req: Request, res: Response) => {
@@ -50,17 +53,19 @@ app.get('/signup', (req: Request, res: Response) => {
 });
 // -------------------------------------------------------------------
 
-// -------------- Route Handling for requests to /api ---------------
-// app.use('/api', apiRouter);
+// -------------- Route Handling for requests to /api ----------------
+app.use('/api', apiRouter);
+
 // -------------------------------------------------------------------
 
+// setInterval()
 
-// ---------------------- 404 HANDLING --------------------------
- app.use('*', (req: Request, res: Response) => {
+// ---------------------- 404 HANDLING -------------------------------
+ app.use('*', (req, res) => {
   res.status(404).send('Not Found');
 });
-// -------------- GLOBAL ERROR HANDLING --------------------------
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+// -------------- GLOBAL ERROR HANDLING ------------------------------
+app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).send('Internal Server Error');
 });

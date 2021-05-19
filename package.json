@@ -4,9 +4,10 @@
   "description": "An application that takes data from the citiBike public API to monitor user favorite stations and deliver alerts when inventory runs low.",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env process.env.NODE_ENV=production nodemon server/server.ts",
+    "start": "cross-env process.env.NODE_ENV=production nodemon server/server.js",
     "build": "cross-env process.env.NODE_ENV=production webpack",
-    "dev": "cross-env process.env.NODE_ENV=development concurrently \"webpack serve\" \"nodemon ./server/server.ts\"",
+    "dev": "cross-env process.env.NODE_ENV=development concurrently \"webpack serve\" \"nodemon ./server/server.js\"",
+    "dev-mac": "cross-env process.env.NODE_ENV=development webpack serve & nodemon ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -55,6 +56,7 @@
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.7",
+    "pg": "^8.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router": "^5.2.0",
