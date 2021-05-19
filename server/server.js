@@ -44,11 +44,11 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../src/index.html'));
 });
 
-app.get('/dashboard', (req: Request, res: Response) => {
+app.get('/dashboard', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../src/index.html'))
 });
 
-app.get('/signup', (req: Request, res: Response) => {
+app.get('/signup', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../src/index.html'))
 });
 // -------------------------------------------------------------------
