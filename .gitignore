@@ -2,6 +2,10 @@
 /build
 package-lock.json
 
+#package-lock
+package-lock.json
+
+
 # Logs
 logs
 *.log

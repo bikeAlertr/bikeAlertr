@@ -31,7 +31,7 @@ const Signup = () => {
     }).then((response) => response.json());
     // .then(data => {
     //   console.log("signin: ", user);
-    //   setUser(...user, data);
+      //   setUser(...user, data);
     // })
   };
 
