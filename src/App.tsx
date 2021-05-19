@@ -26,7 +26,6 @@ const App = () => {
           </Route>
           <Route path="/dashboard">
             <Dashboard />
-            <Alerts />
           </Route>
         </Switch>
       </BrowserRouter>      
