@@ -6,6 +6,13 @@ const FavoritesTable = () => {
   const [favorites, setFavorites] = useState({ data: [] });
   // Write a function that makes table rows with data from PostgreSQL DB
 
+  // Create a function to store the time everytime fetch is called
+
+  const lastUpdated = () => {
+    let time = new Date();
+    return time.toTimeString();
+  };
+
   const getFavorites = () => {
     // Iterate through the JSON object from the DB
     // Retrieve the required data
@@ -18,15 +25,22 @@ const FavoritesTable = () => {
         console.log("favorites", favorites);
         setFavorites(data);
       });
+
+    lastUpdated(); // to store the time of this fetch req
     favRowCreator();
   };
 
-  const trFromDB = [];  // necessary to keep in global scope
+  const trFromDB = []; // necessary to keep in global scope
   const favRowCreator = () => {
     for (const favStations of favorites.data) {
       const tr = (
         <tr>
+          <td>{favStations.station_status}</td>
+          <td>{favStations.name}</td>
+          <td>{favStations.num_available_bikes}</td>
+          <td>{favStations.num_available_ebikes}</td>
           <td>{favStations.stationName}</td>
+          <td>{lastUpdated}</td>
         </tr>
       );
       trFromDB.push(tr);
@@ -41,8 +55,9 @@ const FavoritesTable = () => {
       <table>
         <tr>
           <th>Status</th>
-          <th>Station Locations</th>
+          <th>Station Location</th>
           <th>Bikes Available</th>
+          <th>eBikes Available</th>
           <th>Last Updated</th>
         </tr>
         {trFromDB}
