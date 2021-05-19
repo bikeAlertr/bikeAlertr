@@ -52,6 +52,7 @@ stationController.addStationInfo = async (req, res, next) => {
 };
 
 stationController.updateStations = async (req, res, next) => {
+  console.log('updating')
   try {
     const stationData = await axios.get('https://gbfs.citibikenyc.com/gbfs/en/station_information.json');
     const statusData = await axios.get('https://gbfs.citibikenyc.com/gbfs/en/station_status.json');
@@ -79,10 +80,10 @@ stationController.updateStations = async (req, res, next) => {
           } = statusData.data.data.stations[j];
           
           let updateStationsQuery = `UPDATE "public"."stations"
-          SET name = '${name}', capacity = '${capacity}', num_available_ebikes = '${num_available_ebikes}', 
+          SET name = '${name}', capacity = '${capacity}', num_available_ebikes = '${num_ebikes_available}', num_available_bikes = '${num_bikes_available}', num_docks_available = '${num_docks_available}', num_bikes_disabled = '${num_bikes_disabled}', longitude = '${lon}', latitude = '${lat}', is_renting ='${is_renting}', station_status='${station_status}'
           WHERE station_id = '${station_id}'`
           
-          res.locals = await db.query(addStationQuery);
+          res.locals = await db.query(updateStationsQuery);
         }
       }
     }

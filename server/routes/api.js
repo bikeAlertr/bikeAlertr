@@ -1,4 +1,6 @@
 const express = require('express');
+const { stat } = require('fs');
+const { nextTick } = require('process');
 
 const stationController = require('../controllers/stationController.js')
 
@@ -18,7 +20,9 @@ router.get('/test',
   }
 );
 
-router.get('/updateStation', () => {setInterval(()=>{stationController.updateStations}, 10000)}, 
+const state = ()=>{stationController.updateStations}
+
+router.get('/updateStation', state,
 (err, res, req) => {
   res.status(200).json('Successfully updated the SQL Table!')
 }
