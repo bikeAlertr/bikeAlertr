@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const db = require('../models/stationModels');
+const db = require('../models/bikersdbModels');
 
 const stationController = {};
 

@@ -28,7 +28,7 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 // *** LOGIN PAGE HANDLING ***************
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../src/index.html'));
-})
+});
 // ***************************************
 // *** SIGNUP PAGE HANDLING **************
 app.get('/signup', (req, res) => {
@@ -42,22 +42,11 @@ app.get('/signup', (req, res) => {
 app.get('/dashboard', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../src/index.html'));
 });
-
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../src/index.html'))
-});
-
-app.get('/signup', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../src/index.html'))
-});
 // -------------------------------------------------------------------
 
 // -------------- Route Handling for requests to /api ----------------
 app.use('/api', apiRouter);
-
 // -------------------------------------------------------------------
-
-// setInterval()
 
 // ---------------------- 404 HANDLING -------------------------------
  app.use('*', (req, res) => {
