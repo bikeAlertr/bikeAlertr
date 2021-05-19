@@ -54,6 +54,53 @@ stationController.addStationInfo = async (req, res, next) => {
 stationController.updateStations = async (req, res, next) => {
   console.log('updating')
   try {
+    setInterval(async () => {
+      const stationData = await axios.get('https://gbfs.citibikenyc.com/gbfs/en/station_information.json');
+      const statusData = await axios.get('https://gbfs.citibikenyc.com/gbfs/en/station_status.json');
+
+      for (let i = 0; i < stationData.data.data.stations.length; i++) {
+        const { 
+          station_id,
+          capacity, 
+          lon,
+          lat
+        } = stationData.data.data.stations[i];
+        let { name } = stationData.data.data.stations[i];
+        name = name.replace("'", "''");
+
+        for (let j = 0; j < statusData.data.data.stations.length; j++) {
+          if (statusData.data.data.stations[j].station_id === stationData.data.data.stations[i].station_id) {
+            // console.log(statusElement.station_id);
+            const { 
+              num_ebikes_available,
+              num_bikes_available,  
+              num_docks_available,
+              num_bikes_disabled,
+              is_renting, 
+              station_status, 
+            } = statusData.data.data.stations[j];
+            
+            let updateStationsQuery = `UPDATE "public"."stations"
+            SET name = '${name}', capacity = '${capacity}', num_available_ebikes = '${num_ebikes_available}', num_available_bikes = '${num_bikes_available}', num_docks_available = '${num_docks_available}', num_bikes_disabled = '${num_bikes_disabled}', longitude = '${lon}', latitude = '${lat}', is_renting ='${is_renting}', station_status='${station_status}'
+            WHERE station_id = '${station_id}'`
+            
+            res.locals = await db.query(updateStationsQuery);
+          }
+        }
+      }
+
+      console.log('done!')
+    }, 120000);
+    
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+stationController.refreshStations = async (req, res, next) => {
+  console.log('updating')
+  try {
     const stationData = await axios.get('https://gbfs.citibikenyc.com/gbfs/en/station_information.json');
     const statusData = await axios.get('https://gbfs.citibikenyc.com/gbfs/en/station_status.json');
 
@@ -88,7 +135,8 @@ stationController.updateStations = async (req, res, next) => {
       }
     }
 
-    console.log('done!')
+    console.log('done!');
+    
     next();
   } catch (err) {
     next(err);

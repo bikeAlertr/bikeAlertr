@@ -1,10 +1,12 @@
 const path = require('path');
+const HtmleWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   mode: process.env.NODE_ENV,
   module: {
@@ -43,13 +45,19 @@ module.exports = {
   },
   devServer: {
     publicPath: '/build/',
+    historyApiFallback: true,
     contentBase: path.join(__dirname, 'src'),
     proxy: {
-      '/' : 'http://localhost:3000'
+      '/' : 'http://localhost:3000',
     },
     hot: true,
     port: 8080
   },
+  plugins: [
+    new HtmleWebpackPlugin({
+      template: 'src/index.html'
+    })
+  ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx']
   }
