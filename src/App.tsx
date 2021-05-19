@@ -1,4 +1,3 @@
-import { Box } from "@material-ui/core";
 import React from "react";
 import { Router, Route, Switch } from "react-router";
 import { BrowserRouter } from "react-router-dom";
@@ -12,9 +11,7 @@ let routes = (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Box component="span" m={1}>
             <Login />
-          </Box>
         </Route>
         <Route path="/signup">
           <Signup />
