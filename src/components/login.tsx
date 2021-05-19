@@ -5,7 +5,7 @@ import "../styles/loginStyles.scss";
 
 const Login = () => {
   const [login, setLogin] = useState({});
-  const { user, setUser } = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext);
 
   const formSubmit = (e: any) => {
     e.preventDefault();
@@ -23,11 +23,12 @@ const Login = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(login),
-    }).then((response) => response.json())
-      .then(data => {
+    })
+    .then((response) => response.json())
+    .then((data) => {
         console.log("signin: ", user);
         setUser(data);
-      })
+      });
   };
 
   return (
