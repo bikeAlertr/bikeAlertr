@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "./context/Auth.context";
 import "../styles/loginStyles.scss";
 
 const Login = () => {
   const [login, setLogin] = useState({});
-  // const { user, setUser } = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext)
 
   const formSubmit = (e: any) => {
     e.preventDefault();
 
-    // signin();
+    signin();
 
     console.log("this is login state", login);
     // console.log('this is email', e.target[0].value)
@@ -22,11 +23,11 @@ const Login = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(login),
-    }).then((response) => response.json());
-    // .then(data => {
-    //   console.log("signin: ", user);
-    //   setUser(...user, data);
-    // })
+    }).then((response) => response.json())
+      .then(data => {
+        console.log("signin: ", user);
+        setUser(data);
+      })
   };
 
   return (
