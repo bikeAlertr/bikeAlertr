@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import InfoBox from "react-google-maps/lib/components/addons/InfoBox";
-=======
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
->>>>>>> 84d0cb6ecbbce71bb1076cd31292cb85344f033d
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '950px',
+  height: '600px'
 };
 
 const center = {
-  lat: 40.797873,
-  lng: -73.919965
+  lat: 40.723705,
+  lng: -73.994288
 };
 
 function EasyGoogleMap(props) {
@@ -79,23 +74,16 @@ function EasyGoogleMap(props) {
 
   return (
     <LoadScript
-<<<<<<< HEAD
-      googleMapsApiKey='AIzaSyD2ZffsCApDOBPuCAPAEpHmoJUClvr74Gg'
-=======
-      googleMapsApiKey='API KEY'
->>>>>>> 84d0cb6ecbbce71bb1076cd31292cb85344f033d
+      googleMapsApiKey=''
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={13}
       >
         { /* Child components, such as markers, info windows, etc. */ }
         <></>
         {genMarkers}
-<<<<<<< HEAD
-        
-=======
         {
           selected.station_id && 
           (
@@ -119,7 +107,6 @@ function EasyGoogleMap(props) {
           </InfoWindow>
           )
          }
->>>>>>> 84d0cb6ecbbce71bb1076cd31292cb85344f033d
       </GoogleMap>
     </LoadScript>
   )
