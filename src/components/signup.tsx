@@ -1,38 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { signUp } from "../../server/controllers/userController";
 import { signupForm } from "../types/signUpTypes"
+import { AuthContext } from "./context/Auth.context";
 
 
-const Signup = () => {
+const Signup = (props) => {
+  const { user, setUser } = useContext(AuthContext);
   const [signUpState, setSignUpState] = useState<signupForm>({
+    firstname: "",
     email: "",
     password: "",
     confirmPassword: "",
     address1: "",
     address2: "",
     city: "",
-    zip_code: 0,
-    phone: 0,
+    zip_code: "",
+    phone: "",
   });
 
   const signUpSubmit = (e: any) => {
     e.preventDefault();
     if (validatePassword()) createUser();
     else alert("Invalid Inputs!");
-    // console.log(signUpState);
-    // console.log(e.target.value);
+    console.log('this is signupstate', signUpState);
+    console.log('this is target value', e.target.value);
   };
 
   const createUser = () => {
-    fetch(`/user/signup`, {
+    fetch(`/api/signup`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(signUpState),
-    }).then((response) => response.json());
-    // .then(data => {
-    //   console.log("signin: ", user);
-      //   setUser(...user, data);
-    // })
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        'firstname': signUpState.firstname,
+        'email': signUpState.email,
+        'password': signUpState.password,
+        'address1': signUpState.address1,
+        'address2': signUpState.address2,
+        'city': signUpState.city,
+        'zip_code': signUpState.zip_code,
+        'phone': signUpState.phone
+      }),
+    }).then((response) => response.json())
+    .then(data => {
+      props.setSignedUp(true);
+    })
   };
 
   const validatePassword = () => {
@@ -43,6 +55,15 @@ const Signup = () => {
     <div>
       <h1>Signup page</h1>
       <form id="SignUpForm" onSubmit={signUpSubmit}>
+      <input
+          id="name"
+          type="text"
+          placeholder="First Name"
+          onChange={(e) =>
+            setSignUpState({ ...signUpState, firstname: e.target.value })
+          }
+        />
+        <br />
         <input
           id="email"
           type="text"
@@ -99,19 +120,19 @@ const Signup = () => {
         <br />
         <input
           id="zipCode"
-          type="number"
+          type="text"
           placeholder="Zip Code"
           onChange={(e) =>
-            setSignUpState({ ...signUpState, zip_code: +e.target.value })
+            setSignUpState({ ...signUpState, zip_code: e.target.value })
           }
         />
         <br />
         <input
           id="phone"
-          type="number"
+          type="text"
           placeholder="Phone"
           onChange={(e) =>
-            setSignUpState({ ...signUpState, phone: +e.target.value })
+            setSignUpState({ ...signUpState, phone: e.target.value })
           }
         />
         <br />

@@ -7,7 +7,10 @@ const FavoritesTable = () => {
 
   // Write useEffect to call getFavorites on page load
   useEffect( () => {
-    getFavorites();
+    // getFavorites();
+    console.log('the user in favoritestable is: ', user);
+    lastUpdated(); // to store the time of this fetch req
+    favRowCreator();
   });
 
   // Function that creates a timestamp when called
@@ -16,25 +19,25 @@ const FavoritesTable = () => {
     return time.toTimeString();
   };
 
-  const getFavorites = () => {
-    // Iterate through the JSON object from the DB
-    // Retrieve the required data
-    fetch(`/user/favorites`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("favorites", favorites);
-        // Update local favorites state with data from server
-        setFavorites(data);
-        // Update context with favorites to share with alerts component
-        setUser(...user, favorites);
-      });
+  // const getFavorites = () => {
+  //   // Iterate through the JSON object from the DB
+  //   // Retrieve the required data
+  //   fetch(`/user/favorites`, {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("favorites", favorites);
+  //       // Update local favorites state with data from server
+  //       setFavorites(data);
+  //       // Update context with favorites to share with alerts component
+  //       setUser(...user, favorites);
+  //     });
 
-    lastUpdated(); // to store the time of this fetch req
-    favRowCreator();
-  };
+  //   lastUpdated(); // to store the time of this fetch req
+  //   favRowCreator();
+  // };
 
 
   const deleteFav = (e) => {
