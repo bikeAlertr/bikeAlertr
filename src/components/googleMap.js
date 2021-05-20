@@ -51,7 +51,7 @@ function EasyGoogleMap() {
 
   return (
     <LoadScript
-      googleMapsApiKey= 'ADD API KEY HERE';
+      googleMapsApiKey='APIKEY'
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
