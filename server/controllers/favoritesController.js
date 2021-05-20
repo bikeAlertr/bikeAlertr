@@ -42,7 +42,7 @@ favoritesController.getFavStations = async (req, res, next) => {
       stationDataArray.push(stationElement.rows[0]);
     }
 
-    console.log('stationDataArray is: ', stationDataArray);
+    // console.log('stationDataArray is: ', stationDataArray);
 
     res.locals = stationDataArray;
     next();

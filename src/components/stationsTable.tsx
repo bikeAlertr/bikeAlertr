@@ -1,18 +1,24 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
+
 const StationsTable = () => {
   const { user, setUser } = useContext(AuthContext);
   const [stations, setStations] = useState({});
 
   // Write useEffect to call getFavorites on page load
-  useEffect( () => {
-    stationRowCreator(stations);
-  }, [stations]);
+  // useEffect( () => {
+    
+  //   let data: any = stations;
+  //   console.log("data.data in the useEffecthook is: ", data.data);
+  //   stationRowCreator(data);
 
+  //   // stationsTable();
+  // }, []);
+  
   useEffect( () => {
     // console.log('this is user in stationstable.tsx', user);
-    console.log('stations in useeffect', stations)
+    // console.log('stations in useeffect', stations)
     getStations()
   }, []);
 
@@ -30,9 +36,9 @@ const StationsTable = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('res.locals after getstations is', data );
+        // console.log('res.locals after getstations is', data );
         setStations({...stations, data})
-        console.log("stations", stations);
+        // console.log("stations", stations);
       });
 
     // to store the time of this fetch req  
@@ -42,18 +48,20 @@ const StationsTable = () => {
 
   const favStation = (e) => {
     // Send a PUT req to server to add specified Station to Favorites Table
-    fetch(`/user/addFav`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(e.target.value)
+    fetch(`/api/addFavStation`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        'station_id': e.target.value,
+      })
     })
   }
 
   const trFromDB = []; // necessary to keep in global scope
   const stationRowCreator = async (stations) => {
-    console.log('this is stations in row creator', stations.data)
+    // console.log('this is stations in row creator', stations.data)
     if (Array.isArray(stations.data)) {
-      console.log(stations.data.length)
+      // console.log(stations.data.length)
       for (let i = 0; i < stations.data.length; i++) {
         trFromDB.push(
           <tr id={stations.data[i].station_id}>
@@ -61,23 +69,19 @@ const StationsTable = () => {
             <td>{stations.data[i].name}</td>
             <td>{stations.data[i].num_available_bikes}</td>
             <td>{stations.data[i].num_available_ebikes}</td>
-            <td>{stations.data[i].stationName}</td>
             <td>{lastUpdated()}</td>
-            <td><button id={stations.data[i].station_id} onClick={favStation}>Favorite</button></td>
+            <td><button id={stations.data[i].station_id} value={stations.data[i].station_id} onClick={favStation}>Favorite</button></td>
           </tr>
         );
         // trFromDB.push(tr);
        
       }
-      console.log('this is tr from db', trFromDB);
+      // console.log('this is tr from db', trFromDB);
       return trFromDB;      
     }
   };
 
-  useEffect( () => {
-    // console.log('this is user in stationstable.tsx', user);
-    console.log('RENDERED AGAIN')
-  }, [stationRowCreator]);
+  stationRowCreator(stations);
 
   return (
     <div>
@@ -90,7 +94,6 @@ const StationsTable = () => {
           <th>Last Updated</th>
           <th>Add Favorite</th>
         </tr>
-        {console.log('in return', trFromDB)}
         {trFromDB}
       </table>
     </div>

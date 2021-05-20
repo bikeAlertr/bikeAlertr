@@ -8,6 +8,10 @@ const Dashboard = () => {
   const { user, setUser } = useContext(AuthContext);
   let date = new Date();
   
+  // useEffect to get userid from the cookie to set user
+
+
+
   return (
     <div>
       <h1>Dashboard</h1>

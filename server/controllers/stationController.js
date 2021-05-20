@@ -6,7 +6,7 @@ const stationController = {};
 
 stationController.getStations = async (req, res, next) => {
   try {
-    let getStationsQuery = `SELECT * FROM "public"."stations" LIMIT 3`;
+    let getStationsQuery = `SELECT * FROM "public"."stations" LIMIT 10`;
     res.locals = await db.query(getStationsQuery);
     next();
   } catch {
