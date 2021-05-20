@@ -58,6 +58,20 @@ function EasyGoogleMap(props) {
 
     makeMarkers(stations);
 
+
+    const favStation = (e) => {
+      // Send a PUT req to server to add specified Station to Favorites Table
+      fetch(`/api/addFavStation`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          'station_id': e.target.value,
+        })
+      }).then( data => {
+        props.setFavorites(data);
+      })
+    }
+
   return (
     <LoadScript
       googleMapsApiKey='API KEY'
@@ -87,7 +101,7 @@ function EasyGoogleMap(props) {
               <p>Capacity: {selected.capacity}</p>
               <p>Available Bikes: {selected.num_available_bikes}</p>
               <p>Available E-Bikes: {selected.num_available_ebikes}</p>
-              <button onClick={()=>(props.setFavorites(selected.station_id))}>Add Favorite</button> 
+              <button value={selected.station_id} onClick={(e)=>{favStation(e)}}>Add Favorite</button> 
             </div>
             
           </InfoWindow>
