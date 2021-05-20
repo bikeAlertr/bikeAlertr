@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
+import Button from '@material-ui/core/Button';
 
 const StationsTable = (props) => {
   const { user, setUser } = useContext(AuthContext);
@@ -72,7 +73,11 @@ const StationsTable = (props) => {
             <td>{stations.data[i].num_available_bikes}</td>
             <td>{stations.data[i].num_available_ebikes}</td>
             <td>{lastUpdated()}</td>
-            <td><button id={stations.data[i].station_id} value={stations.data[i].station_id} onClick={favStation}>Favorite</button></td>
+            <td>
+              <Button variant="contained" color="primary" id={stations.data[i].station_id} value={stations.data[i].station_id} onClick={favStation}>
+                Favorite
+              </Button>
+            </td>
           </tr>
         );
         // trFromDB.push(tr);

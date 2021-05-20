@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
+import Button from '@material-ui/core/Button';
+
 const FavoritesTable = (props) => {
   const { user, setUser } = useContext(AuthContext);
   // const [favorites, setFavorites] = useState({ data: [] });
@@ -80,23 +82,32 @@ const FavoritesTable = (props) => {
 
   const trFromDB = []; // necessary to keep in global scope
   const favRowCreator = (favorites) => {
-
-    for (const favStations of favorites) {
-      const tr = (
-        <tr id={favStations.station_id}>
-          <td>{favStations.station_status}</td>
-          <td>{favStations.name}</td>
-          <td>{favStations.num_available_bikes}</td>
-          <td>{favStations.num_available_ebikes}</td>
-          <td>{lastUpdated()}</td>
-          <td><button id={favStations.station_id} value={favStations.station_id} onClick={deleteFav}>Delete</button></td>
-          <td><button id={favStations.station_id} value={favStations.station_id} onClick={addAlert}>Add Alert</button></td>
-        </tr>
-        // Need to add a delete button to each Table Row (use onClick to invoke a delete func that will send a delete req to server)
-      );
-      trFromDB.push(tr);
+    if (Array.isArray(favorites)) {
+      for (const favStations of favorites) {
+        const tr = (
+          <tr id={favStations.station_id}>
+            <td>{favStations.station_status}</td>
+            <td>{favStations.name}</td>
+            <td>{favStations.num_available_bikes}</td>
+            <td>{favStations.num_available_ebikes}</td>
+            <td>{lastUpdated()}</td>
+            <td>
+              <Button variant="contained" color="primary" id={favStations.station_id} value={favStations.station_id} onClick={deleteFav}>
+                Delete
+              </Button>
+            </td>
+            <td>
+              <Button variant="contained" color="primary" id={favStations.station_id} value={favStations.station_id} onClick={addAlert}>
+                Add Alert
+              </Button>
+            </td>
+          </tr>
+          // Need to add a delete button to each Table Row (use onClick to invoke a delete func that will send a delete req to server)
+        );
+        trFromDB.push(tr);
+      }
+      return trFromDB;
     }
-    return trFromDB;
   };
 
   favRowCreator(props.favorites);

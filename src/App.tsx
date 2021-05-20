@@ -8,6 +8,9 @@ import Signup from "./components/signup";
 import { AuthContext } from "./components/context/Auth.context"
 
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+
 
 const App = () => {
   const [user, setUser]  = useState({});
@@ -20,6 +23,7 @@ const App = () => {
   return (
     <div>
       <AuthContext.Provider value={providerUser}>
+        <CssBaseline />
         <BrowserRouter>
           <Switch>
             <Route exact path="/">

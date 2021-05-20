@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '950px',
+  height: '600px'
 };
 
 const center = {
-  lat: 40.797873,
-  lng: -73.919965
+  lat: 40.723705,
+  lng: -73.994288
 };
 
 function EasyGoogleMap(props) {
@@ -74,12 +74,12 @@ function EasyGoogleMap(props) {
 
   return (
     <LoadScript
-      googleMapsApiKey='API KEY'
+      googleMapsApiKey=''
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={13}
       >
         { /* Child components, such as markers, info windows, etc. */ }
         <></>
