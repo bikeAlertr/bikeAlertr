@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
 
-const StationsTable = () => {
+const StationsTable = (props) => {
   const { user, setUser } = useContext(AuthContext);
   const [stations, setStations] = useState({});
 
@@ -54,6 +54,8 @@ const StationsTable = () => {
       body: new URLSearchParams({
         'station_id': e.target.value,
       })
+    }).then( data => {
+      props.setFavorites(data);
     })
   }
 

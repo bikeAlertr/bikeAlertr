@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
-const FavoritesTable = () => {
+const FavoritesTable = (props) => {
   const { user, setUser } = useContext(AuthContext);
-  const [favorites, setFavorites] = useState({ data: [] });
+  // const [favorites, setFavorites] = useState({ data: [] });
+  // const [test, setTest] = useState(props.favorites)
 
   // Write useEffect to call getFavorites on page load
   useEffect( () => {
@@ -17,7 +18,7 @@ const FavoritesTable = () => {
     // favRowCreator();
     getFavorites();
     
-  }, []);
+  }, [props.favorites]);
 
   // useEffect(() => {
   //   // console.log("favorites", favorites);
@@ -40,9 +41,9 @@ const FavoritesTable = () => {
       .then((res) => res.json())
       .then((data) => {
         // Update local favorites state with data from server
-        setFavorites(data);
+        props.setFavorites(data);
         // Update context with favorites to share with alerts component
-        setUser(...user, favorites);
+        setUser(...user, props.favorites);
       });
 
     lastUpdated(); // to store the time of this fetch req
@@ -61,7 +62,20 @@ const FavoritesTable = () => {
     });
 
     // Remove the HTML table row from the DOM
-    document.getElementById(e.target.value).remove();
+    // document.getElementById(e.target.value).remove();
+  }
+
+  const addAlert = (e) => {
+    // Send a PUT req to server to add specified Station to Favorites Table
+    fetch(`/api/addAlert`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        'station_id': e.target.value,
+      })
+    }).then( data => {
+      props.setFavorites(data);
+    })
   }
 
   const trFromDB = []; // necessary to keep in global scope
@@ -76,6 +90,7 @@ const FavoritesTable = () => {
           <td>{favStations.num_available_ebikes}</td>
           <td>{lastUpdated()}</td>
           <td><button id={favStations.station_id} value={favStations.station_id} onClick={deleteFav}>Delete</button></td>
+          <td><button id={favStations.station_id} value={favStations.station_id} onClick={addAlert}>Add Alert</button></td>
         </tr>
         // Need to add a delete button to each Table Row (use onClick to invoke a delete func that will send a delete req to server)
       );
@@ -84,7 +99,7 @@ const FavoritesTable = () => {
     return trFromDB;
   };
 
-  favRowCreator(favorites);
+  favRowCreator(props.favorites);
 
   return (
     <div>
@@ -96,6 +111,7 @@ const FavoritesTable = () => {
           <th>eBikes Available</th>
           <th>Last Updated</th>
           <th>Delete Favorite</th>
+          <th>Add Alert</th>
         </tr>
         {trFromDB}
       </table>

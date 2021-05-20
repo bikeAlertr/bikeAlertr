@@ -42,7 +42,7 @@ alertsController.getAlerts = async (req, res, next) => {
       userAlertArray.push(alertElement.rows[0]);
     }
 
-    console.log('userAlertArray is: ', userAlertArray);
+    // console.log('userAlertArray is: ', userAlertArray);
 
     res.locals = userAlertArray;
     next();
