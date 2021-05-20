@@ -13,7 +13,9 @@ userController.signUp = async (req, res, next) => {
     // Create a const named salt assigned the value of the bcrypt.genSaltSync with a salt of 10
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
-  
+    
+
+    
     // create query to check if input email exists
     let emailQuery = `SELECT email FROM "public"."users" WHERE email='${email}'`;
     const emailCheck = await db.query(emailQuery);
