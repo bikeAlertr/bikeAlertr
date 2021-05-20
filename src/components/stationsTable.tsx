@@ -3,12 +3,15 @@ import { AuthContext } from "./context/Auth.context";
 
 const StationsTable = () => {
   const { user, setUser } = useContext(AuthContext);
-  const [stations, setStations] = useState({ data: [] });
+  const [stations, setStations] = useState([]);
 
   // Write useEffect to call getFavorites on page load
   useEffect( () => {
+    // console.log('this is user in stationstable.tsx', user);
     getStations();
-  });
+    // console.log('stations in useeffect', stations)
+    stationRowCreator(stations);
+  }, []);
 
   // Function that creates a timestamp when called
   const lastUpdated = () => {
@@ -19,24 +22,25 @@ const StationsTable = () => {
   const getStations = () => {
     // Iterate through the JSON object from the DB
     // Retrieve the required data
-    fetch(`/stations`, {
+    fetch(`/api/stations`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("stations", stations);
+        console.log('res.locals after getstations is', data );
         setStations(data);
+        // console.log("stations", stations);
       });
 
     lastUpdated(); // to store the time of this fetch req
-    stationRowCreator();
+    
   };
 
 
   const favStation = (e) => {
     // Send a PUT req to server to add specified Station to Favorites Table
-    fetch(`/user/addFav}`, {
+    fetch(`/user/addFav`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(e.target.value)
@@ -44,18 +48,18 @@ const StationsTable = () => {
   }
 
   const trFromDB = []; // necessary to keep in global scope
-  const stationRowCreator = () => {
-
-    for (const station of stations.data) {
+  const stationRowCreator = (stations) => {
+    console.log('this is stations in row creator', stations)
+    for (let i = 0; i < stations.length; i++) {
       const tr = (
-        <tr id={station.name}>
-          <td>{station.station_status}</td>
-          <td>{station.name}</td>
-          <td>{station.num_available_bikes}</td>
-          <td>{station.num_available_ebikes}</td>
-          <td>{station.stationName}</td>
+        <tr id={stations[i].name}>
+          <td>{stations[i].station_status}</td>
+          <td>{stations[i].name}</td>
+          <td>{stations[i].num_available_bikes}</td>
+          <td>{stations[i].num_available_ebikes}</td>
+          <td>{stations[i].stationName}</td>
           <td>{lastUpdated}</td>
-          <td><button id={station.name} onClick={favStation}>Favorite</button></td>
+          <td><button id={stations[i].name} onClick={favStation}>Favorite</button></td>
         </tr>
       );
       trFromDB.push(tr);

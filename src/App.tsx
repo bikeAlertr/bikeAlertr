@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useContext } from "react";
 import { Router, Route, Switch } from "react-router";
 import { BrowserRouter, Redirect } from "react-router-dom";
 import Alerts from "./components/alertColumn";
@@ -11,6 +11,7 @@ import { AuthContext } from "./components/context/Auth.context"
 
 const App = () => {
   const [user, setUser] = useState({});
+  // const { user, setUser } = useContext(AuthContext);
   const providerUser = useMemo(() => ({ user, setUser }), [user, setUser])
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -18,22 +19,22 @@ const App = () => {
 
   return (
     <div>
-    <AuthContext.Provider value={providerUser}>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {loggedIn ? <Redirect to="/dashboard" /> : <Login setLoggedIn={setLoggedIn}/>}
-          </Route>
-          <Route path="/signup">
-            {signedUp ? <Redirect to="/" /> : <Signup setSignedUp={setSignedUp}/>}
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </BrowserRouter>      
-    </AuthContext.Provider>
-  </div>
+      <AuthContext.Provider value={providerUser}>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              {loggedIn ? <Redirect to="/dashboard" /> : <Login setLoggedIn={setLoggedIn}/>}
+            </Route>
+            <Route path="/signup">
+              {signedUp ? <Redirect to="/" /> : <Signup setSignedUp={setSignedUp}/>}
+            </Route>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+          </Switch>
+        </BrowserRouter>      
+      </AuthContext.Provider>
+    </div>
   )
 };
 

@@ -25,6 +25,13 @@ const router = express.Router();
 //   }
 // );
 
+router.get('/stations', 
+  stationController.getStations, 
+  (err, res, req) => {
+    res.status(200).send(res.locals.rows)
+  }
+)
+
 // DYNAMICALLY UPDATE THE STATIONS TABLE EVERY MINUTE
 router.get('/updateStation', 
   stationController.updateStations, 

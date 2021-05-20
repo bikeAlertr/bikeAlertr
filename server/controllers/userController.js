@@ -87,11 +87,16 @@ userController.login = async (req, res, next) => {
     // check if the bcrypted passwords match
     if (verified){ 
       // store email data from user table in response object at property email 
-      res.locals.email = verifyEmail;
+      // res.locals.email = verifyEmail;
       console.log('the firstname in verifyemail is: ', verifyEmail.rows[0].first_name);
-      let firstname = verifyEmail.rows[0];
-      res.locals.firstname = firstname;
-
+      // let firstname = verifyEmail.rows[0].first_name
+      // let address_id = verifyEmail.rows[0].address_id;
+      res.locals.email = verifyEmail.rows[0].email;
+      res.locals.address_id = verifyEmail.rows[0].address_id;
+      res.locals.firstname = verifyEmail.rows[0].first_name;
+      res.locals.alerts = verifyEmail.rows[0].alerts;
+      res.locals.favorite_stations = verifyEmail.rows[0].favorite_station;
+      
 
       // store foreign_id : address_id from user table and store it in a variable
       let address_id = verifyEmail.rows[0].address_id
@@ -100,8 +105,12 @@ userController.login = async (req, res, next) => {
       let addressQuery = `SELECT * FROM "public"."address" WHERE address_id='${address_id}'`
       const addressResponse = await db.query(addressQuery)
       // store addrss data from address table in response object at property: address
-      res.locals.address = addressResponse
-
+      res.locals.address1 = addressResponse.rows[0].address1;
+      res.locals.address2 = addressResponse.rows[0].address2;
+      res.locals.city = addressResponse.rows[0].city;
+      res.locals.phone = addressResponse.rows[0].phone;
+      res.locals.zip_code = addressResponse.rows[0].zip_code;
+      
       // create a query to find the userId and store userid into res.locals.userid
       let userIDQuery = `SELECT user_id FROM "public"."users" WHERE email='${email}'`;
       const queryUser = await db.query(userIDQuery);

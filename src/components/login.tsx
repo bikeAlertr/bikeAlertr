@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./context/Auth.context";
 import "../styles/loginStyles.scss";
@@ -6,7 +6,7 @@ import "../styles/loginStyles.scss";
 const Login = (props) => {
   const [login, setLogin] = useState({});
   const { user, setUser } = useContext(AuthContext);
-
+  // const [users, setUsers] 
   const formSubmit = (e: any) => {
     e.preventDefault();
 
@@ -28,8 +28,10 @@ const Login = (props) => {
     .then((data) => {
       // Update user context with response from server
       setUser(...user, data);
+      // let log = user;
+      // console.log('this is user from server', log);
       // Update isLogged state to authorize access to /dashboard
-      props.setLoggedIn(data.isLoggedIn);
+      props.setLoggedIn(data.isLoggedIn); 
     });
   };
 
