@@ -1,5 +1,6 @@
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
+const { isConditionalExpression } = require('typescript');
 
 const db = require('../models/bikersdbModels');
 
@@ -8,24 +9,25 @@ const userController = {};
 // // ADD USER TO DATABASE
 userController.signUp = async (req, res, next) => {
   try {
+    console.log(req.body)
     // Using destructuring, create const Username and Password with the values from req.body
     const { firstname, password, email, address1, address2, zip_code, phone, city } = req.body;
     // Create a const named salt assigned the value of the bcrypt.genSaltSync with a salt of 10
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
-  
+    console.log('this is zip_code', typeof(zip_code), zip_code)
     // create query to check if input email exists
     let emailQuery = `SELECT email FROM "public"."users" WHERE email='${email}'`;
     const emailCheck = await db.query(emailQuery);
-    // console.log(emailCheck);
-    if (emailCheck.rowCount === 0) {
 
+    if (emailCheck.rowCount === 0) {
       // create query to insert address information inputed by user into address table
+      console.log(typeof(zip_code));
       let addressQuery = `INSERT INTO "public"."address" (address1, address2, zip_code, phone, city) 
       VALUES ('${address1}', '${address2}', '${zip_code}', '${phone}', '${city}');`;
       // store query into res.locals
       res.locals = await db.query(addressQuery);
-
+      console.log('this is res.locals', res.locals);
       // create query to find primary-key: address_id from addresss table to store as foreign-key in users table
       let getAddressIdQuery = `SELECT address_id FROM "public"."address" WHERE phone='${phone}';`;
       let address_id_query = await db.query(getAddressIdQuery);

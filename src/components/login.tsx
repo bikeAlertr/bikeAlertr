@@ -13,13 +13,13 @@ const Login = () => {
     signin();
 
     console.log("this is login state", login);
-    // console.log('this is email', e.target[0].value)
-    // console.log('this is password', e.target[1].value)
-    // console.log('clicked submit')
+    console.log('this is email', e.target[0].value)
+    console.log('this is password', e.target[1].value)
+    console.log('clicked submit')
   };
 
   const signin = () => {
-    fetch(`/user/login`, {
+    fetch(`/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(login),
