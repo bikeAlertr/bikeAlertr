@@ -18,7 +18,7 @@ const FavoritesTable = (props) => {
     // favRowCreator();
     getFavorites();
     
-  }, []);
+  }, [props.favorites]);
 
   // useEffect(() => {
   //   // console.log("favorites", favorites);

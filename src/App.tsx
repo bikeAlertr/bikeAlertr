@@ -10,7 +10,7 @@ import { AuthContext } from "./components/context/Auth.context"
 
 
 const App = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser]  = useState({});
   // const { user, setUser } = useContext(AuthContext);
   const providerUser = useMemo(() => ({ user, setUser }), [user, setUser])
 
