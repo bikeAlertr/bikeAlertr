@@ -2,22 +2,20 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
 const StationsTable = () => {
-  // const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [stations, setStations] = useState({});
-  const [test, setTest] = useState(0)
+
   // Write useEffect to call getFavorites on page load
   useEffect( () => {
-    // console.log('this is user in stationstable.tsx', user);
-    console.log('stations in useeffect', stations)
     stationRowCreator(stations);
   }, [stations]);
-
 
   useEffect( () => {
     // console.log('this is user in stationstable.tsx', user);
     console.log('stations in useeffect', stations)
     getStations()
   }, []);
+
   // Function that creates a timestamp when called
   const lastUpdated = () => {
     let time = new Date();
@@ -25,7 +23,6 @@ const StationsTable = () => {
   };
 
   const getStations = () => {
-    // Iterate through the JSON object from the DB
     // Retrieve the required data
     fetch(`/api/stations`, {
       method: "GET",
@@ -38,8 +35,8 @@ const StationsTable = () => {
         console.log("stations", stations);
       });
 
-    lastUpdated(); // to store the time of this fetch req
-    
+    // to store the time of this fetch req  
+    lastUpdated(); 
   };
 
 
