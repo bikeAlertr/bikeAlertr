@@ -1,9 +1,10 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 // const axios = require('axios');
-
+const bodyparser = require('body-parser');
 const app = express();
 const path = require('path');
+
 
 const apiRouter = require('./routes/api');
 
@@ -12,6 +13,7 @@ const apiRouter = require('./routes/api');
 app.use(cookieParser());
 app.use(express.json());
 // Parse urlencoded body content & save to req.body
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // ------------------------------------------------------------------
 

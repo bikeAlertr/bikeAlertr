@@ -1,34 +1,38 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./context/Auth.context";
 import "../styles/loginStyles.scss";
 
-const Login = () => {
+const Login = (props) => {
   const [login, setLogin] = useState({});
   const { user, setUser } = useContext(AuthContext);
-
+  // const [users, setUsers] 
   const formSubmit = (e: any) => {
     e.preventDefault();
 
     signin();
 
     console.log("this is login state", login);
-    // console.log('this is email', e.target[0].value)
-    // console.log('this is password', e.target[1].value)
-    // console.log('clicked submit')
+    console.log('this is email', e.target[0].value)
+    console.log('this is password', e.target[1].value)
+    console.log('clicked submit')
   };
 
   const signin = () => {
-    fetch(`/user/login`, {
+    fetch(`/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(login),
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log("signin: ", user);
-        setUser(data);
-      });
+      // Update user context with response from server
+      setUser(...user, data);
+      // let log = user;
+      // console.log('this is user from server', log);
+      // Update isLogged state to authorize access to /dashboard
+      props.setLoggedIn(data.isLoggedIn); 
+    });
   };
 
   return (
