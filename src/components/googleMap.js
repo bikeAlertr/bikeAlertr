@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import InfoBox from "react-google-maps/lib/components/addons/InfoBox";
 
 const containerStyle = {
   width: '400px',
@@ -51,7 +52,7 @@ function EasyGoogleMap() {
 
   return (
     <LoadScript
-      googleMapsApiKey='APIKEY'
+      googleMapsApiKey='AIzaSyD2ZffsCApDOBPuCAPAEpHmoJUClvr74Gg'
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -61,6 +62,7 @@ function EasyGoogleMap() {
         { /* Child components, such as markers, info windows, etc. */ }
         <></>
         {genMarkers}
+        
       </GoogleMap>
     </LoadScript>
   )
