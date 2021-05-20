@@ -32,6 +32,7 @@ const Login = (props) => {
       // console.log('this is user from server', log);
       // Update isLogged state to authorize access to /dashboard
       props.setLoggedIn(data.isLoggedIn); 
+      sessionStorage.setItem('user', JSON.stringify(data));
     });
   };
 
