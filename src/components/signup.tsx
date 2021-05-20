@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { signUp } from "../../server/controllers/userController";
 import { signupForm } from "../types/signUpTypes"
+import { AuthContext } from "./context/Auth.context";
 
 
-const Signup = () => {
+const Signup = (props) => {
+  const { user, setUser } = useContext(AuthContext);
   const [signUpState, setSignUpState] = useState<signupForm>({
     firstname: "",
     email: "",
@@ -39,11 +41,10 @@ const Signup = () => {
         'zip_code': signUpState.zip_code,
         'phone': signUpState.phone
       }),
-    }).then((response) => response.json());
-    // .then(data => {
-    //   console.log("signin: ", user);
-      //   setUser(...user, data);
-    // })
+    }).then((response) => response.json())
+    .then(data => {
+      props.setSignedUp(true);
+    })
   };
 
   const validatePassword = () => {

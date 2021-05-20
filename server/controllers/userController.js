@@ -25,7 +25,7 @@ userController.signUp = async (req, res, next) => {
       console.log(typeof(zip_code));
       let addressQuery = `INSERT INTO "public"."address" (address1, address2, zip_code, phone, city) 
       VALUES ('${address1}', '${address2}', '${zip_code}', '${phone}', '${city}');`;
-      // store query into res.locals
+      // store query into res.localns
       res.locals = await db.query(addressQuery);
       console.log('this is res.locals', res.locals);
       // create query to find primary-key: address_id from addresss table to store as foreign-key in users table
@@ -88,6 +88,10 @@ userController.login = async (req, res, next) => {
     if (verified){ 
       // store email data from user table in response object at property email 
       res.locals.email = verifyEmail;
+      console.log('the firstname in verifyemail is: ', verifyEmail.rows[0].first_name);
+      let firstname = verifyEmail.rows[0];
+      res.locals.firstname = firstname;
+
 
       // store foreign_id : address_id from user table and store it in a variable
       let address_id = verifyEmail.rows[0].address_id
@@ -105,6 +109,7 @@ userController.login = async (req, res, next) => {
       console.log('the res.locals.user is: ', res.locals.user_id);
 
       console.log("you have been loged in! :")
+      res.locals.isLoggedIn = true;
   }else{
     console.log('wrong email and password combination!')
   }

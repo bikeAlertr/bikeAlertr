@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "./context/Auth.context";
 import "../styles/loginStyles.scss";
 
-const Login = () => {
+const Login = (props) => {
   const [login, setLogin] = useState({});
   const { user, setUser } = useContext(AuthContext);
 
@@ -26,9 +26,11 @@ const Login = () => {
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log("signin: ", user);
-        setUser(data);
-      });
+      // Update user context with response from server
+      setUser(...user, data);
+      // Update isLogged state to authorize access to /dashboard
+      props.setLoggedIn(data.isLoggedIn);
+    });
   };
 
   return (
