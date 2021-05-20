@@ -11,6 +11,7 @@ const apiRouter = require('./routes/api');
 // ------------------------------------------------------------------
 // Parse cookies & save to req.cookies
 app.use(cookieParser());
+app.use(express.json());
 // Parse urlencoded body content & save to req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
