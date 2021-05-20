@@ -8,11 +8,8 @@ import EasyGoogleMap from "./googleMap";
 const Dashboard = () => {
   const { user, setUser } = useContext(AuthContext);
   const [favorites, setFavorites] = useState({ data: [] });
-  // console.log('inside of dashboard')
-  let date = new Date();
-  
-  // useEffect to get userid from the cookie to set user
 
+  let date = new Date();
 
 
   return (
@@ -22,7 +19,7 @@ const Dashboard = () => {
       <h5>{`The date is ${date.toDateString()}`}</h5>
       <h5>{`The time is ${date.toTimeString()}`}</h5>
 
-      <EasyGoogleMap />
+      <EasyGoogleMap setFavorites={setFavorites} favorites={favorites} />
       
       FAVORITES TABLE
       <FavoritesTable setFavorites={setFavorites} favorites={favorites} /> 
