@@ -2,8 +2,24 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 
 const StationsTable = (props) => {
+  const classes = useStyles();
+
   const { user, setUser } = useContext(AuthContext);
   const [stations, setStations] = useState({});
 
@@ -67,18 +83,18 @@ const StationsTable = (props) => {
       // console.log(stations.data.length)
       for (let i = 0; i < stations.data.length; i++) {
         trFromDB.push(
-          <tr id={stations.data[i].station_id}>
-            <td>{stations.data[i].station_status}</td>
-            <td>{stations.data[i].name}</td>
-            <td>{stations.data[i].num_available_bikes}</td>
-            <td>{stations.data[i].num_available_ebikes}</td>
-            <td>{lastUpdated()}</td>
-            <td>
+          <TableRow key={stations.data[i].station_id} id={stations.data[i].station_id}>
+            <TableCell>{stations.data[i].station_status}</TableCell>
+            <TableCell>{stations.data[i].name}</TableCell>
+            <TableCell>{stations.data[i].num_available_bikes}</TableCell>
+            <TableCell>{stations.data[i].num_available_ebikes}</TableCell>
+            <TableCell>{lastUpdated()}</TableCell>
+            <TableCell>
               <Button variant="contained" color="primary" id={stations.data[i].station_id} value={stations.data[i].station_id} onClick={favStation}>
                 Favorite
               </Button>
-            </td>
-          </tr>
+            </TableCell>
+          </TableRow>
         );
         // trFromDB.push(tr);
        
@@ -91,19 +107,23 @@ const StationsTable = (props) => {
   stationRowCreator(stations);
 
   return (
-    <div>
-      <table>
-        <tr>
-          <th>Status</th>
-          <th>Station Location</th>
-          <th>Bikes Available</th>
-          <th>eBikes Available</th>
-          <th>Last Updated</th>
-          <th>Add Favorite</th>
-        </tr>
-        {trFromDB}
-      </table>
-    </div>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="stations table">
+      <TableHead>
+          <TableRow>
+            <TableCell>Status</TableCell>
+            <TableCell align="center">Station Location</TableCell>
+            <TableCell align="center">Bikes Available</TableCell>
+            <TableCell align="center">eBikes Available</TableCell>
+            <TableCell align="center">Last Updated</TableCell>
+            <TableCell align="center">Delete Favorite</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {trFromDB}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

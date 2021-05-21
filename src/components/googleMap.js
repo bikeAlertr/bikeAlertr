@@ -74,7 +74,7 @@ function EasyGoogleMap(props) {
 
   return (
     <LoadScript
-      googleMapsApiKey=''
+      googleMapsApiKey='AIzaSyD2ZffsCApDOBPuCAPAEpHmoJUClvr74Gg'
     >
       <GoogleMap
         mapContainerStyle={containerStyle}

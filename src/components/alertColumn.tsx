@@ -1,7 +1,24 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
 const Alerts = () => {
+  const classes = useStyles();
+
   // Favorite stations live in user object
   const { user, setUser } = useContext(AuthContext);
   const [ alerts, setAlerts ] = useState([]);
@@ -56,9 +73,11 @@ const Alerts = () => {
         // if 25% or below, render an ALERT in return statment
         if (percentAvailable <= 25) {
           alertArray.push(
-            <div>
-              Station {stations.station_id} is running low on Bikes as of {lastUpdated()}
-            </div>
+            <TableRow key={stations.station_id}>
+              <TableCell>
+                Station {stations.station_id} is running low on Bikes as of {lastUpdated()}
+              </TableCell>
+            </TableRow>
           );
         }
       }
@@ -71,10 +90,17 @@ const Alerts = () => {
   // console.log(alertArray);
   
   return (
-    <div>
-      <h1>Alert Column</h1>
-      {alertArray}
-    </div>
+    <TableContainer component={Paper}>
+      <TableHead>
+        <TableRow>
+          <TableCell>Alert Column</TableCell>
+        </TableRow>
+      </TableHead>
+      {/* <h1>Alert Column</h1> */}
+      <TableBody>
+        {alertArray}
+      </TableBody>
+    </TableContainer>
   );
 };
 
