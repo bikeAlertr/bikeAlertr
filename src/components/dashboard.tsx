@@ -255,7 +255,7 @@ const Dashboard = () => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}><a href='http://localhost:8080/login'>Sign Out</a></MenuItem>
+      <MenuItem onClick={handleMenuClose}><a href='http://localhost:8080/'>Sign Out</a></MenuItem>
     </Menu>
   );
 
@@ -280,7 +280,7 @@ const Dashboard = () => {
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
+          <Badge badgeContent={4} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -336,7 +336,7 @@ const Dashboard = () => {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 17 new notifications" color="inherit">
-                <Badge badgeContent={17} color="secondary">
+                <Badge badgeContent={2} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>

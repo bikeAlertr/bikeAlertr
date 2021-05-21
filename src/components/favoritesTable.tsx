@@ -2,8 +2,24 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./context/Auth.context"; 
 
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 
 const FavoritesTable = (props) => {
+  const classes = useStyles();
+
   const { user, setUser } = useContext(AuthContext);
   // const [favorites, setFavorites] = useState({ data: [] });
   // const [test, setTest] = useState(props.favorites)
@@ -85,23 +101,24 @@ const FavoritesTable = (props) => {
     if (Array.isArray(favorites)) {
       for (const favStations of favorites) {
         const tr = (
-          <tr id={favStations.station_id}>
-            <td>{favStations.station_status}</td>
-            <td>{favStations.name}</td>
-            <td>{favStations.num_available_bikes}</td>
-            <td>{favStations.num_available_ebikes}</td>
-            <td>{lastUpdated()}</td>
-            <td>
+          
+          <TableRow key={favStations.station_id} id={favStations.station_id}>
+            <TableCell>{favStations.station_status}</TableCell>
+            <TableCell >{favStations.name}</TableCell>
+            <TableCell >{favStations.num_available_bikes}</TableCell>
+            <TableCell >{favStations.num_available_ebikes}</TableCell>
+            <TableCell >{lastUpdated()}</TableCell>
+            <TableCell >
               <Button variant="contained" color="primary" id={favStations.station_id} value={favStations.station_id} onClick={deleteFav}>
                 Delete
               </Button>
-            </td>
-            <td>
+            </TableCell >
+            <TableCell >
               <Button variant="contained" color="primary" id={favStations.station_id} value={favStations.station_id} onClick={addAlert}>
                 Add Alert
               </Button>
-            </td>
-          </tr>
+            </TableCell >
+          </TableRow>
           // Need to add a delete button to each Table Row (use onClick to invoke a delete func that will send a delete req to server)
         );
         trFromDB.push(tr);
@@ -113,9 +130,20 @@ const FavoritesTable = (props) => {
   favRowCreator(props.favorites);
 
   return (
-    <div>
-      <table>
-        <tr>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="favorites table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Status</TableCell>
+            <TableCell align="center">Station Location</TableCell>
+            <TableCell align="center">Bikes Available</TableCell>
+            <TableCell align="center">eBikes Available</TableCell>
+            <TableCell align="center">Last Updated</TableCell>
+            <TableCell align="center">Delete Favorite</TableCell>
+            <TableCell align="center">Add Alert</TableCell>
+          </TableRow>
+        </TableHead>
+        {/* <tr>
           <th>Status</th>
           <th>Station Location</th>
           <th>Bikes Available</th>
@@ -123,10 +151,12 @@ const FavoritesTable = (props) => {
           <th>Last Updated</th>
           <th>Delete Favorite</th>
           <th>Add Alert</th>
-        </tr>
-        {trFromDB}
-      </table>
-    </div>
+        </tr> */}
+        <TableBody>
+          {trFromDB}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
